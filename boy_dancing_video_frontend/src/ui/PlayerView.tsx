@@ -1,36 +1,38 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { theme } from "../theme";
-import {
-  useCurrentFrame,
-  useVideoConfig,
-  continueRender,
-  delayRender,
-} from "remotion";
 
 /**
  * PUBLIC_INTERFACE
  * PlayerView: Wraps content for a central player area and minimal controls below.
  * Expects a visual content (the Remotion Composition UI renders separately in Studio).
+ *
+ * Note: This component must NOT use Remotion hooks, since it is rendered outside of any <Composition/>.
+ * Pass width/height/fps/durationInFrames as props if needed for display purposes.
  */
+// PUBLIC_INTERFACE
 export function PlayerView({
   title,
   children,
   onResolutionChange,
+  width = 1920,
+  height = 1080,
+  fps = 30,
+  durationInFrames = 240,
+  currentFrame = 0,
 }: {
   title?: string;
   children: React.ReactNode;
   onResolutionChange?: (w: number, h: number) => void;
+  width?: number;
+  height?: number;
+  fps?: number;
+  durationInFrames?: number;
+  currentFrame?: number;
 }) {
-  const { width, height, fps, durationInFrames } = useVideoConfig();
-  const frame = useCurrentFrame();
-  const [pendingHandle] = useState(() => delayRender("Player UI initial"));
-  useState(() => {
-    // complete immediately – placeholder for when remote assets load
-    continueRender(pendingHandle);
-    return undefined;
-  });
-
   const styles = useMemo(() => {
+    const safeTotal = Math.max(1, durationInFrames - 1);
+    const progressPct = (currentFrame / safeTotal) * 100;
+
     return {
       container: {
         flex: 1,
@@ -115,18 +117,18 @@ export function PlayerView({
         borderRadius: 999,
         background: theme.colors.primary,
         boxShadow: theme.shadows.soft,
-        transform: `translateX(${(frame / Math.max(1, durationInFrames - 1)) * 100}%)`,
+        transform: `translateX(${progressPct}%)`,
       },
       trackFill: {
         position: "absolute" as const,
         left: 0,
         top: 0,
         bottom: 0,
-        width: `${(frame / Math.max(1, durationInFrames - 1)) * 100}%`,
+        width: `${progressPct}%`,
         background: theme.colors.secondary,
       },
     } as const;
-  }, [frame, durationInFrames]);
+  }, [durationInFrames, currentFrame]);
 
   const onSelectResolution = (val: string) => {
     const [w, h] = val.split("x").map((n) => parseInt(n.trim(), 10));
@@ -231,7 +233,7 @@ export function PlayerView({
         <div style={styles.infoGroup as React.CSSProperties}>
           <span style={styles.label as React.CSSProperties}>Frame</span>
           <span style={styles.value as React.CSSProperties}>
-            {frame} / {durationInFrames - 1}
+            {currentFrame} / {durationInFrames - 1}
           </span>
         </div>
       </div>

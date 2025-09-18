@@ -63,6 +63,9 @@ export const RemotionRoot: React.FC = () => {
     () => (
       <PlayerView
         title="Boy Dancing Viewer"
+        width={ui.width}
+        height={ui.height}
+        // fps and durationInFrames are display-only; keep defaults or wire up if needed.
         onResolutionChange={(w, h) => setUi((prev) => ({ ...prev, width: w, height: h }))}
       >
         <div style={{ color: "#9CA3AF", fontSize: 12 }}>
@@ -70,7 +73,7 @@ export const RemotionRoot: React.FC = () => {
         </div>
       </PlayerView>
     ),
-    []
+    [ui.width, ui.height]
   );
 
   return (
