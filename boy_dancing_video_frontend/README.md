@@ -1,54 +1,48 @@
-# Remotion video
+# Boy Dancing Video Frontend (Remotion)
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.gif">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Minimalist Ocean Professional themed viewer for a "Boy Dancing" video using Remotion.
 
-Welcome to your Remotion project!
+## Features
+- Central player frame with controls section beneath (play/pause guidance, scrub progress indicator)
+- Optional collapsible sidebar for customization (colors: background, primary, secondary, accent)
+- Responsive layout suitable for desktop and mobile
+- Remotion compositions:
+  - BoyDancing (simple programmatic animation placeholder)
+  - HelloWorld and OnlyLogo examples
 
-## Commands
+## Getting Started
 
-**Install Dependencies**
-
-```console
+Install dependencies:
+```bash
 npm i
 ```
 
-**Start Preview**
-
-```console
+Start Remotion Studio:
+```bash
 npm run dev
 ```
 
-**Render video**
+Open the preview URL from the terminal output. The application shell is visible in the studio. Use the Studio controls (top bar) to play/pause and scrub the timeline.
 
-```console
-npx remotion render
+## Rendering
+Render via CLI:
+```bash
+npx remotion render src/index.ts BoyDancing out/boy-dancing.mp4
 ```
 
-**Upgrade Remotion**
+## Customization
+Use the sidebar controls to adjust colors for the BoyDancing composition. For advanced animation customization, extend `src/compositions/BoyDancing.tsx`.
 
-```console
-npx remotion upgrade
-```
+## Style Guide
+Ocean Professional theme:
+- Primary: `#374151`
+- Secondary: `#9CA3AF`
+- Success: `#10B981`
+- Error: `#EF4444`
+- Background: `#FFFFFF`
+- Surface: `#F9FAFB`
+- Text: `#111827`
 
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+## Notes
+- This MVP uses programmatic shapes as a placeholder for the boy dancing. Replace with assets or more complex animation as needed.
+- The Remotion Studio manages playback; the bottom controls in the app shell are visual/UX aids.
