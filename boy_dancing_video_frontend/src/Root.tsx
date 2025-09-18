@@ -124,7 +124,7 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
-      <Folder name="Boy Dancing">
+      <Folder name="boy-dancing">
         <Composition
           id="BoyDancing"
           component={BoyDancing}
